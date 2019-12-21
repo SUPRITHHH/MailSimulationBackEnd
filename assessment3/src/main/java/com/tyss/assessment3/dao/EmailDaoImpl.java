@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.tyss.assessment3.dto.UserInformation;
 
-
 @Repository
 public class EmailDaoImpl implements EmailDAO {
 
@@ -24,6 +23,8 @@ public class EmailDaoImpl implements EmailDAO {
 		TypedQuery<UserInformation> query = manager.createQuery(jpql,UserInformation.class);
 		query.setParameter("email",email);
 		query.setParameter("password", password);
+		
+		
 		try {
 			UserInformation bean = query.getSingleResult();
 		return bean;
@@ -48,6 +49,20 @@ public class EmailDaoImpl implements EmailDAO {
 			return -1;
 		}
 		
+	}
+
+	@Override
+	public boolean changePassword(int uid, String password) {
+		EntityManager manager = factory.createEntityManager();
+		EntityTransaction transaction = manager.getTransaction();
+		transaction.begin();
+		UserInformation bean = manager.find(UserInformation.class,uid);
+		bean.setPassword(password);
+		bean.setConfirmPassword(password);
+		transaction.commit();
+		return true;
+	
+	
 	}
 	
 	

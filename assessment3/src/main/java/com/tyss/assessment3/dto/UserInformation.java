@@ -1,11 +1,16 @@
 package com.tyss.assessment3.dto;
 
+
+
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,8 +32,28 @@ public class UserInformation {
 	@Column
 	private String password;
 	
+	@Column
+	private String confirmPassword;
+	
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	private List<MailIformation> mailInfos;
 	
 	
+	public List<MailIformation> getMailInfos() {
+		return mailInfos;
+	}
+
+	public void setMailInfos(List<MailIformation> mailInfos) {
+		this.mailInfos = mailInfos;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	public int getUid() {
 		return uid;
